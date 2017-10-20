@@ -1,6 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/';
+import { Observable, Subscription } from 'rxjs/';
+import { Store } from '@ngrx/store';
 
 import { MailMessage } from '../mail-message';
 
@@ -9,22 +10,23 @@ import { MailMessage } from '../mail-message';
   templateUrl: './mailbox.component.html',
   styleUrls: ['./mailbox.component.scss']
 })
-export class MailboxComponent implements OnInit, OnDestroy {
+export class MailboxComponent implements OnInit {
 
   mailbox: string;
-  messages: MailMessage[];
-  subscription: Subscription;
+  messages$: Observable<MailMessage[]>;
 
-  constructor( private route: ActivatedRoute ) { }
+  constructor( private route: ActivatedRoute, private store: Store<any> ) { }
 
   ngOnInit() {
-    this.subscription = this.route.url.subscribe(url => {
+    this.route.url.subscribe(url => {
       this.mailbox = url[0].path;
     });
-  }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.messages$ = this.store.select(s => {
+      return this.inboxActive() ?
+        s.mailboxReducer.inbox.messages :
+        s.mailboxReducer.outbox.messages;
+    });
   }
 
   inboxActive(): boolean {

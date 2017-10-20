@@ -13,6 +13,10 @@ import { MailboxComponent } from './mailbox/mailbox.component';
 import { MailboxControlsComponent } from './mailbox/mailbox-controls/mailbox-controls.component';
 import { CustomRouterStateSerializer} from './utils';
 
+import { MailService } from './mail.service';
+import { MailboxEffects } from './mailbox/mailboxEffects';
+import { mailboxReducer } from './mailbox/mailboxReducer';
+
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -25,12 +29,13 @@ import { environment } from '../environments/environment';
     BrowserModule,
     HttpModule,
     AppRoutingModule,
-    StoreModule.forRoot({ routerReducer: routerReducer }),
+    StoreModule.forRoot({ routerReducer: routerReducer, mailboxReducer: mailboxReducer }),
     StoreRouterConnectingModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([MailboxEffects]),
   ],
   providers: [
+    MailService,
     {provide: RouterStateSerializer, useClass: CustomRouterStateSerializer}
   ],
   bootstrap: [AppComponent]

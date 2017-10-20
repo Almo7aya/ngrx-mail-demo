@@ -9,13 +9,12 @@
       <span class="subject">Subject</span>
       <span class="date-sent">Date</span>
     </li>
-
-    <li class="mailbox-list-item" *ngFor="let message of messages">
+    <li class="mailbox-list-item" *ngFor="let message of (messages$ | async)">
       <a class="mailbox-item-link" [routerLink]="['view', message.id]" routerLinkActive="is-active">
         <span class="recipient" *ngIf="outboxActive()">{{message.recipient}}</span>
         <span class="sender" *ngIf="inboxActive()">{{message.sender}}</span>
         <span class="subject">{{message.subject}}</span>
-        <span class="date-sent">{{message.dateSent | date:'yy.MM.dd'}}</span>
+        <span class="date-sent">{{message.dateSent | date:'y.MM.dd'}}</span>
       </a>
     </li>
   </ol>
