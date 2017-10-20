@@ -28,6 +28,7 @@ export class MailboxEffects {
   @Effect()
   loadInbox$ = this.actions$.ofType(INBOX_LOADING)
     .switchMap(action => {
+      // TODO: Handle errors
       return this.mailService
         .getInboxMessages()
         .map(messages => new InboxLoaded(messages));
@@ -36,6 +37,7 @@ export class MailboxEffects {
   @Effect()
   loadOutbox$ = this.actions$.ofType(OUTBOX_LOADING)
     .switchMap(action => {
+      // TODO: Handle errors
       return this.mailService
         .getOutboxMessages()
         .map(messages => {
