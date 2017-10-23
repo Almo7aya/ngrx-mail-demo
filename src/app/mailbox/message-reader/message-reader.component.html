@@ -1,0 +1,11 @@
+<div class="message-controls" *ngIf="message$ | async">
+  <button class="message-button" (click)="deleteMessage()">Delete</button>
+  <button class="message-button" disabled="disabled">Reply</button>
+</div>
+<div class="message-reader" *ngIf="message$ | async">
+  <div class="recipient"><span class="label">To:</span> {{(message$ | async).recipient}}</div>
+  <div class="sender"><span class="label">From:</span> {{(message$ | async).sender}} </div>
+  <div class="date-sent"><span class="label">Sent:</span> {{(message$ | async).dateSent}} </div>
+  <div class="subject"><span class="label">Subject:</span> {{(message$ | async).subject}}</div>
+  <div class="body">{{(message$ | async).body}}</div>
+</div>

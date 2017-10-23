@@ -18,12 +18,14 @@ import { MailboxEffects } from './mailbox/mailboxEffects';
 import { mailboxReducer } from './mailbox/mailboxReducer';
 
 import { environment } from '../environments/environment';
+import {MessageReaderComponent} from './mailbox/message-reader/message-reader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MailboxComponent,
-    MailboxControlsComponent
+    MailboxControlsComponent,
+    MessageReaderComponent
   ],
   imports: [
     BrowserModule,

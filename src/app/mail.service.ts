@@ -11,7 +11,7 @@ import { MailMessage } from './mail-message';
 
 @Injectable()
 export class MailService {
-  private hostUrl =  'http://localhost:3000';
+  hostUrl =  'http://localhost:3000';
   constructor(private http: Http) { }
 
   getInboxMessages(): Observable<MailMessage[]> {

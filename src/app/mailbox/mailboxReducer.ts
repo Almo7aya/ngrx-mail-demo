@@ -1,7 +1,9 @@
 import * as mailbox from './mailboxActions';
-import {MailMessage} from '../mail-message';
+import { MailMessage } from '../mail-message';
 
 export interface State {
+  messageLoading: boolean;
+  viewingMessage: MailMessage;
   inbox: MailboxState;
   outbox: MailboxState;
 }
@@ -12,6 +14,8 @@ export interface MailboxState {
 }
 
 const initialState: State = {
+  messageLoading: false,
+  viewingMessage: null,
   inbox: {
     loading: false,
     messages: []
@@ -38,6 +42,7 @@ export function mailboxReducer(state = initialState, action: mailbox.Actions): S
     case mailbox.INBOX_LOADING: {
       return {
         ...state,
+        viewingMessage: null,
         inbox: {
           loading: true,
           messages: state.inbox.messages
@@ -58,10 +63,27 @@ export function mailboxReducer(state = initialState, action: mailbox.Actions): S
     case mailbox.OUTBOX_LOADING: {
       return {
         ...state,
+        viewingMessage: null,
         outbox: {
           loading: true,
           messages: state.outbox.messages
         }
+      };
+    }
+
+    case mailbox.MESSAGE_LOADING: {
+      return {
+        ...state,
+        viewingMessage: null,
+        messageLoading: true
+      };
+    }
+
+    case mailbox.MESSAGE_LOADED: {
+      return {
+        ...state,
+        messageLoading: false,
+        viewingMessage: action.payload
       };
     }
 

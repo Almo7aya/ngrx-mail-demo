@@ -1,0 +1,17 @@
+:host {
+  grid-column: 1 / 3;
+  display: grid;
+  grid-template-columns: inherit;
+}
+
+.message-reader {
+  padding: 10px 15px;
+
+  & > * {
+    padding: 5px;
+  }
+
+  & .label {
+    font-weight: 600;
+  }
+}
