@@ -25,8 +25,8 @@ export class MailboxComponent implements OnInit {
 
     this.messages$ = this.store.select(s => {
       return this.inboxActive() ?
-        s.mailboxReducer.inbox.messages :
-        s.mailboxReducer.outbox.messages;
+        s.mailbox.inbox.messages :
+        s.mailbox.outbox.messages;
     });
   }
 

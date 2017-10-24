@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -19,7 +19,7 @@ export class MessageReaderComponent implements OnInit {
 
   ngOnInit() {
     this.message$ = this.store.select(s => {
-      return s.mailboxReducer.viewingMessage;
+      return s.mailbox.viewingMessage;
     });
   }
 

@@ -31,7 +31,7 @@ import {MessageReaderComponent} from './mailbox/message-reader/message-reader.co
     BrowserModule,
     HttpModule,
     AppRoutingModule,
-    StoreModule.forRoot({ routerReducer: routerReducer, mailboxReducer: mailboxReducer }),
+    StoreModule.forRoot({ router: routerReducer, mailbox: mailboxReducer }),
     StoreRouterConnectingModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([MailboxEffects]),
