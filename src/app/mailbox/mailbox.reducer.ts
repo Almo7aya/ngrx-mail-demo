@@ -1,4 +1,5 @@
-import * as mailbox from './mailboxActions';
+import * as mailbox from './mailbox.actions';
+import * as messageReader from './message-reader/message-reader.actions';
 import { MailMessage } from '../mail-message';
 
 export interface State {
@@ -26,7 +27,7 @@ const initialState: State = {
   }
 };
 
-export function mailboxReducer(state = initialState, action: mailbox.Actions): State {
+export function mailboxReducer(state = initialState, action: mailbox.Actions | messageReader.Actions ): State {
 
   switch (action.type) {
     case mailbox.INBOX_LOADED: {
@@ -71,19 +72,28 @@ export function mailboxReducer(state = initialState, action: mailbox.Actions): S
       };
     }
 
-    case mailbox.MESSAGE_LOADING: {
+    case messageReader.MESSAGE_DELETING: {
+      const mailboxId = action.payload.mailbox;
+      const messageId = action.payload.message.id;
+
       return {
         ...state,
-        viewingMessage: null,
-        messageLoading: true
+        [mailboxId]: {
+          messages: state[mailboxId].messages.filter(m => m.id !== messageId)
+        }
       };
     }
 
-    case mailbox.MESSAGE_LOADED: {
+    case messageReader.MESSAGE_DELETE_FAILED: {
+      const mailboxId = action.payload.mailbox;
+      const message = action.payload.message;
+
+      console.log(state[mailboxId]);
       return {
         ...state,
-        messageLoading: false,
-        viewingMessage: action.payload
+        [mailboxId]: {
+          messages: state[mailboxId].messages.concat([message])
+        }
       };
     }
 

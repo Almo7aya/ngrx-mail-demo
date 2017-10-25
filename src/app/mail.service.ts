@@ -51,8 +51,7 @@ export class MailService {
 
     return this.http
       .delete(url)
-      .map(res => res)
-      .catch(this.handleError);
+      .map(res => res);
   }
 
   sendMessage(message: MailMessage): Observable<MailMessage> {
