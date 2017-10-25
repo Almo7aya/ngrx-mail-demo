@@ -3,8 +3,6 @@ import * as messageReader from './message-reader/message-reader.actions';
 import { MailMessage } from '../mail-message';
 
 export interface State {
-  messageLoading: boolean;
-  viewingMessage: MailMessage;
   inbox: MailboxState;
   outbox: MailboxState;
 }
@@ -15,8 +13,6 @@ export interface MailboxState {
 }
 
 const initialState: State = {
-  messageLoading: false,
-  viewingMessage: null,
   inbox: {
     loading: false,
     messages: []
@@ -43,7 +39,6 @@ export function mailboxReducer(state = initialState, action: mailbox.Actions | m
     case mailbox.INBOX_LOADING: {
       return {
         ...state,
-        viewingMessage: null,
         inbox: {
           loading: true,
           messages: state.inbox.messages
@@ -64,7 +59,6 @@ export function mailboxReducer(state = initialState, action: mailbox.Actions | m
     case mailbox.OUTBOX_LOADING: {
       return {
         ...state,
-        viewingMessage: null,
         outbox: {
           loading: true,
           messages: state.outbox.messages
