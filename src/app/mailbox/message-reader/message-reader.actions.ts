@@ -6,6 +6,7 @@ export const MESSAGE_LOADED = 'Message Loaded (MessageReader)';
 export const MESSAGE_DELETING = 'Deleting Message (MessageReader)';
 export const MESSAGE_DELETED = 'Message Deleted (MessageReader)';
 export const MESSAGE_DELETE_FAILED = 'Delete Message Failure (MessageReader)';
+export const MESSAGE_LOAD_FAILED = 'Load Message Failure (MessageReader)';
 
 export class MessageDeleting implements Action {
   readonly type = MESSAGE_DELETING;
@@ -37,4 +38,10 @@ export class MessageLoaded implements Action {
   constructor(public payload: MailMessage) {}
 }
 
-export type Actions = MessageLoading | MessageLoaded | MessageDeleting | MessageDeleted | MessageDeleteFailed;
+export class MessageLoadFailed implements Action {
+  readonly type = MESSAGE_LOAD_FAILED;
+
+  constructor(public payload: {messageId: string, error: any}) {}
+}
+
+export type Actions = MessageLoading | MessageLoaded | MessageDeleting | MessageDeleted | MessageDeleteFailed | MessageLoadFailed;

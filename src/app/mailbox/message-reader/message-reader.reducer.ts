@@ -37,6 +37,13 @@ export function messageReaderReducer(state = initialState, action: messageReader
       };
     }
 
+    case messageReader.MESSAGE_LOAD_FAILED: {
+      return {
+        ...state,
+        loading: false
+      };
+    }
+
     case messageReader.MESSAGE_DELETE_FAILED: {
       return {
         ...state,
