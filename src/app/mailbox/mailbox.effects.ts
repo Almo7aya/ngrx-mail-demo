@@ -5,12 +5,16 @@ import { Actions, Effect } from '@ngrx/effects';
 import { ROUTER_NAVIGATION, RouterNavigationAction } from '@ngrx/router-store';
 import {MESSAGE_DELETED, MessageDeleted} from './message-reader/message-reader.actions';
 
-import { INBOX_LOADING, InboxLoaded, OUTBOX_LOADING, OutboxLoaded } from './mailbox.actions';
+import {
+  INBOX_LOADING, InboxLoaded, MAILBOX_LOAD_FAILED, MailboxLoadFailed, OUTBOX_LOADING,
+  OutboxLoaded
+} from './mailbox.actions';
 import { MailService } from '../mail.service';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/switchMap';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class MailboxEffects {
@@ -29,22 +33,19 @@ export class MailboxEffects {
   @Effect()
   loadInbox$ = this.actions$.ofType(INBOX_LOADING)
     .switchMap(action => {
-      // TODO: Handle errors
       return this.mailService
         .getInboxMessages()
-        .map(messages => new InboxLoaded(messages));
+        .map(messages => new InboxLoaded(messages))
+        .catch(error => Observable.of(new MailboxLoadFailed({mailbox: 'inbox', error: error})));
       });
 
   @Effect()
   loadOutbox$ = this.actions$.ofType(OUTBOX_LOADING)
     .switchMap(action => {
-
-      // TODO: Handle errors
       return this.mailService
         .getOutboxMessages()
-        .map(messages => {
-          return new OutboxLoaded(messages);
-        });
+        .map(messages => new OutboxLoaded(messages))
+        .catch(error => Observable.of(new MailboxLoadFailed({mailbox: 'outbox', error: error})));
     });
 
   @Effect({dispatch: false})
@@ -52,5 +53,13 @@ export class MailboxEffects {
     .do((action: MessageDeleted) => {
       const mailbox = action.payload.mailbox;
       this.router.navigate([mailbox], {replaceUrl: true});
+    });
+
+  @Effect({dispatch: false})
+  mailboxLoadFailed$ = this.actions$.ofType(MAILBOX_LOAD_FAILED)
+    .do((action: MailboxLoadFailed) => {
+      const mailboxId = action.payload.mailbox;
+      const error = action.payload.error;
+      console.error('Unable to load mailbox: ' + mailboxId, error);
     });
 }

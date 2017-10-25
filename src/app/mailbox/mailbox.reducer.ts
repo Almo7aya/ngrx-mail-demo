@@ -72,6 +72,17 @@ export function mailboxReducer(state = initialState, action: mailbox.Actions | m
       };
     }
 
+    case mailbox.MAILBOX_LOAD_FAILED: {
+      const mailboxId = action.payload.mailbox;
+      return {
+        ...state,
+        [mailboxId]: {
+          loading: false,
+          messages: state[mailboxId].messages
+        }
+      };
+    }
+
     case messageReader.MESSAGE_DELETING: {
       const mailboxId = action.payload.mailbox;
       const messageId = action.payload.message.id;
