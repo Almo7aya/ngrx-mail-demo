@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -23,7 +24,10 @@ import { MessageReaderComponent } from './mailbox/message-reader/message-reader.
 import { MessageReaderEffects } from './mailbox/message-reader/message-reader.effects';
 import { messageReaderReducer } from './mailbox/message-reader/message-reader.reducer';
 
+import { MessageComposerComponent } from './mailbox/message-composer/message-composer.component';
+
 import { environment } from '../environments/environment';
+
 
 const reducers = {
   router: routerReducer,
@@ -37,12 +41,14 @@ const reducers = {
     MailboxComponent,
     MailboxControlsComponent,
     MessageReaderContainerComponent,
-    MessageReaderComponent
+    MessageReaderComponent,
+    MessageComposerComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     StoreModule.forRoot(reducers),
     StoreRouterConnectingModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
