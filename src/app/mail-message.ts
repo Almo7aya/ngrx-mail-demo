@@ -5,4 +5,20 @@ export class MailMessage {
   recipient = '';
   dateSent = '';
   body = '';
+
+  constructor() {
+    this.setDateSent();
+  }
+
+  private static zeroPad(value: number): String {
+    return value > 9 ?  '' + value : '0' + value;
+  }
+
+  private setDateSent(date: Date = new Date()) {
+    const day = MailMessage.zeroPad(date.getDate());
+    const month = MailMessage.zeroPad(date.getMonth());
+    const year = date.getFullYear();
+
+    this.dateSent = `${year}.${month}.${day}`;
+  }
 }

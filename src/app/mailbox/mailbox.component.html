@@ -14,7 +14,7 @@
         <span class="recipient" *ngIf="outboxActive()">{{message.recipient}}</span>
         <span class="sender" *ngIf="inboxActive()">{{message.sender}}</span>
         <span class="subject">{{message.subject}}</span>
-        <span class="date-sent">{{message.dateSent | date:'y.MM.dd'}}</span>
+        <span class="date-sent">{{message.dateSent}}</span>
       </a>
     </li>
   </ol>
