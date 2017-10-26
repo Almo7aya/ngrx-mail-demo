@@ -3,6 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MessageComposerComponent } from './message-composer.component';
+import {StoreModule} from '@ngrx/store';
+import {messageComposerReducer} from './message-composer.reducer';
 
 
 describe('MessageComposerComponent', () => {
@@ -11,7 +13,7 @@ describe('MessageComposerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ ReactiveFormsModule, FormsModule, RouterTestingModule ],
+      imports: [ ReactiveFormsModule, FormsModule, RouterTestingModule, StoreModule.forRoot({messageComposer: messageComposerReducer}) ],
       declarations: [ MessageComposerComponent ]
     })
     .compileComponents();
