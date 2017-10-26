@@ -28,7 +28,7 @@ describe('MailboxControlsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it( 'should contain links to inbox, outbox and compose routes', () => {
+  it( 'should contain links for inbox, outbox and compose', () => {
     const links = getLinks();
     confirmLink(links[0], 'Inbox', 'inbox');
     expect(links[0].getAttribute('RouterLinkActive')).toEqual('is-active');
