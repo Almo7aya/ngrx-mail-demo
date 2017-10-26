@@ -26,7 +26,8 @@ export function messageComposerReducer(state = initialState, action: messageComp
     case messageComposer.MESSAGE_SEND_SUCCESS: {
       return {
         ...state,
-        loading: false
+        loading: false,
+        message: null
       };
     }
 

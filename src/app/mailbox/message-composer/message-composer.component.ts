@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 
 import { MailMessage } from '../../mail-message';
 import { MessageSend } from './message-composer.actions';
+
 
 @Component({
   selector: 'message-composer',
   templateUrl: './message-composer.component.html',
   styleUrls: ['./message-composer.component.scss']
 })
-export class MessageComposerComponent implements OnInit {
+export class MessageComposerComponent implements OnInit, OnDestroy {
 
+  message$: Observable<MailMessage>;
+  subscription$: Subscription;
   messageForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private store: Store<any>) { }
@@ -23,6 +28,20 @@ export class MessageComposerComponent implements OnInit {
       subject: ['', Validators.required],
       body: ['', Validators.required]
     });
+
+    this.message$ =
+      this.store.select( s => s.messageComposer.message);
+
+    this.subscription$ =
+      this.message$.subscribe(message => {
+        if (message) {
+          this.messageForm.patchValue(message);
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 
   cancel() {
@@ -40,6 +59,7 @@ export class MessageComposerComponent implements OnInit {
     message.sender = 'Me';
     message.recipient = this.messageForm.value.recipient;
     message.subject = this.messageForm.value.subject;
+    message.body = this.messageForm.value.body;
 
     this.store.dispatch(new MessageSend({message, mailbox}));
   }
