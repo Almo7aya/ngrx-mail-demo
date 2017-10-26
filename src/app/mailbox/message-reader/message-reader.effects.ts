@@ -46,7 +46,7 @@ export class MessageReaderEffects {
 
       return getMessage.call(this.mailService, messageId)
         .map(message => new MessageLoaded(message))
-        .catch(error => Observable.of(new MessageLoadFailed({messageId: messageId, error: error})));
+        .catch(error => Observable.of(new MessageLoadFailed({messageId, error})));
     });
 
   @Effect()
@@ -58,7 +58,7 @@ export class MessageReaderEffects {
       return this.mailService
         .deleteMessage(mailbox, message.id)
         .map(response =>  new MessageDeleted({mailbox: mailbox}))
-        .catch(error => Observable.of(new MessageDeleteFailed({mailbox: mailbox, message: message})));
+        .catch(error => Observable.of(new MessageDeleteFailed({mailbox, message})));
     });
 
   @Effect({dispatch: false})
