@@ -1,5 +1,6 @@
 import * as mailbox from './mailbox.actions';
 import * as messageReader from './message-reader/message-reader.actions';
+import * as messageComposer from './message-composer/message-composer.actions';
 import { MailMessage } from '../mail-message';
 
 export interface State {
@@ -23,7 +24,7 @@ const initialState: State = {
   }
 };
 
-export function mailboxReducer(state = initialState, action: mailbox.Actions | messageReader.Actions ): State {
+export function mailboxReducer(state = initialState, action: mailbox.Actions | messageReader.Actions | messageComposer.Actions): State {
 
   switch (action.type) {
     case mailbox.INBOX_LOADED: {
@@ -93,11 +94,22 @@ export function mailboxReducer(state = initialState, action: mailbox.Actions | m
       const mailboxId = action.payload.mailbox;
       const message = action.payload.message;
 
-      console.log(state[mailboxId]);
       return {
         ...state,
         [mailboxId]: {
           messages: state[mailboxId].messages.concat([message])
+        }
+      };
+    }
+
+    case messageComposer.MESSAGE_SEND_SUCCESS: {
+      const message = action.payload.message;
+
+      return {
+        ...state,
+        outbox: {
+          loading: state.outbox.loading,
+          messages: state.outbox.messages.concat([message])
         }
       };
     }

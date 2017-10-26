@@ -7,11 +7,6 @@ export interface State {
   currentMessage: MailMessage;
 }
 
-export interface MessageReaderState {
-  loading: boolean;
-  currentMessage: MailMessage;
-}
-
 const initialState: State = {
   loading: false,
   currentMessage: null

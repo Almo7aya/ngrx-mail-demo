@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 
 import { MailMessage } from '../../mail-message';
+import { MessageSend } from './message-composer.actions';
 
 @Component({
   selector: 'message-composer',
@@ -13,7 +15,7 @@ export class MessageComposerComponent implements OnInit {
 
   messageForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private store: Store<any>) { }
 
   ngOnInit() {
     this.messageForm = this.formBuilder.group({
@@ -24,8 +26,8 @@ export class MessageComposerComponent implements OnInit {
   }
 
   cancel() {
-    // const mailbox: string = this.route.snapshot.parent.url[0].path;
-    // this.router.navigateByUrl(mailbox);
+    const mailbox: string = this.route.snapshot.parent.url[0].path;
+    this.router.navigateByUrl(mailbox);
   }
 
   sendDisabled() {
@@ -33,20 +35,12 @@ export class MessageComposerComponent implements OnInit {
   }
 
   send() {
-    const dateSent = new Date();
+    const mailbox: string = this.route.snapshot.parent.url[0].path;
     const message = new MailMessage();
     message.sender = 'Me';
     message.recipient = this.messageForm.value.recipient;
     message.subject = this.messageForm.value.subject;
-    // message.setDateSent(dateSent);
-    //
-    // this.mailService.sendMessage(message).subscribe((response) => {
-    //   if (this.mailbox.name === 'outbox') {
-    //     this.mailbox.messages.push(response);
-    //     this.router.navigateByUrl(`outbox/view/${response.id}`);
-    //   } else {
-    //     this.router.navigateByUrl(`inbox`);
-    //   }
-    // });
+
+    this.store.dispatch(new MessageSend({message, mailbox}));
   }
 }

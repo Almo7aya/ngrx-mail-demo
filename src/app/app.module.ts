@@ -25,15 +25,23 @@ import { MessageReaderEffects } from './mailbox/message-reader/message-reader.ef
 import { messageReaderReducer } from './mailbox/message-reader/message-reader.reducer';
 
 import { MessageComposerComponent } from './mailbox/message-composer/message-composer.component';
+import { messageComposerReducer } from './mailbox/message-composer/message-composer.reducer';
+import { MessageComposerEffects } from './mailbox/message-composer/message-composer.effects';
 
 import { environment } from '../environments/environment';
-
 
 const reducers = {
   router: routerReducer,
   mailbox: mailboxReducer,
-  messageReader: messageReaderReducer
+  messageReader: messageReaderReducer,
+  messageComposer: messageComposerReducer
 };
+
+const effects = [
+  MailboxEffects,
+  MessageReaderEffects,
+  MessageComposerEffects
+];
 
 @NgModule({
   declarations: [
@@ -52,7 +60,7 @@ const reducers = {
     StoreModule.forRoot(reducers),
     StoreRouterConnectingModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([MailboxEffects, MessageReaderEffects]),
+    EffectsModule.forRoot(effects),
   ],
   providers: [
     MailService,

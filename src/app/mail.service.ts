@@ -59,13 +59,6 @@ export class MailService {
 
     return this.http
       .post(url, message)
-      .map(res => res.json() as MailMessage)
-      .catch(this.handleError);
-  }
-
-  // TODO: Change error handling for effects
-  handleError(e) {
-    console.error(e);
-    return Observable.throw(new Error(e));
+      .map(res => res.json() as MailMessage);
   }
 }
