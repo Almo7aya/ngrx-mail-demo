@@ -3,13 +3,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MessageComposerComponent } from './message-composer.component';
-import {Store, StoreModule} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { messageComposerReducer } from './message-composer.reducer';
 import { DebugElement } from '@angular/core';
-import {MailMessage} from '../../mail-message';
-import {MESSAGE_SEND, MessageSend, MessageSendFailed} from './message-composer.actions';
-import Jasmine = jasmine.Jasmine;
-import {ActivatedRoute} from '@angular/router';
+import { MailMessage } from '../../mail-message';
+import { MESSAGE_SEND, MessageSendFailed } from './message-composer.actions';
+import { ActivatedRoute } from '@angular/router';
 
 
 describe('MessageComposerComponent', () => {
