@@ -1,6 +1,6 @@
 <div class="message-controls">
-    <button class="message-button" (click)="cancel()">Cancel</button>
-    <button class="message-button" (click)="send()" [disabled]="sendDisabled()">Send</button>
+    <a id="cancelLink" class="message-button message-button--link" routerLink="..">Cancel</a>
+    <button id="send" class="message-button" (click)="send()" [disabled]="sendDisabled()">Send</button>
 </div>
 <form class="message-composer" [formGroup]="messageForm" novalidate>
     <input class="composer-input" placeholder="recipient" type="text" formControlName="recipient"/>

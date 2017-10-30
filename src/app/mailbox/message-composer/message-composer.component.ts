@@ -44,11 +44,6 @@ export class MessageComposerComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
-  cancel() {
-    const mailbox: string = this.route.snapshot.parent.url[0].path;
-    this.router.navigateByUrl(mailbox);
-  }
-
   sendDisabled() {
     return this.messageForm.status !== 'VALID';
   }

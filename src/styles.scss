@@ -28,6 +28,10 @@ a {
     font-size: inherit;
 }
 
+.message-button--link {
+  width: 130px;
+}
+
 .message-button:hover {
     background: rgba(225, 225, 225, 0.5);
 }

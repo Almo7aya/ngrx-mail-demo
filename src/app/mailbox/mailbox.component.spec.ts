@@ -29,7 +29,6 @@ describe('MailboxComponent', () => {
   });
 
   it('should be created', () => {
-    store.next(new InboxLoaded([]));
     expect(component).toBeTruthy();
   });
 });

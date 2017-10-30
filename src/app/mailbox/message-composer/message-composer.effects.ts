@@ -34,7 +34,6 @@ export class MessageComposerEffects {
   @Effect({dispatch: false})
   sendMessageSuccess$ = this.actions$.ofType(MESSAGE_SEND_SUCCESS)
     .do(({payload}: MessageSendSuccess) => {
-      console.log(this.route);
       const mailbox = payload.mailbox;
       const messageId = payload.message.id;
       const url = mailbox === 'outbox' ? `/outbox/view/${messageId}` : '/inbox';
